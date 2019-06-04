@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import T145.tbone.api.config.ConfigTBone;
 import T145.tbone.blocks.BlockModItem;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -17,6 +18,9 @@ import net.minecraft.util.datafix.DataFixer;
 import net.minecraft.util.datafix.FixTypes;
 import net.minecraft.util.datafix.walkers.ItemStackDataLists;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.config.Config;
+import net.minecraftforge.common.config.ConfigManager;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -78,10 +82,19 @@ public class TBone {
 	}
 
 	@SubscribeEvent
+	public static void tbone$configUpdate(OnConfigChangedEvent event) {
+		if (event.getModID().equals(ID)) {
+			ConfigManager.sync(ID, Config.Type.INSTANCE);
+		}
+	}
+
+	@SubscribeEvent
 	public static void tbone$playerLogin(PlayerLoggedInEvent event) {
-		for (UpdateChecker update : UPDATES) {
-			if (update.hasUpdate()) {
-				event.player.sendMessage(update.getUpdateNotification());
+		if (ConfigTBone.checkForUpdates) {
+			for (UpdateChecker update : UPDATES) {
+				if (update.hasUpdate()) {
+					event.player.sendMessage(update.getUpdateNotification());
+				}
 			}
 		}
 	}
