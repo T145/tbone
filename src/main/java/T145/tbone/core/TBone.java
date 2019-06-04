@@ -40,7 +40,7 @@ public class TBone {
 	public static final String ID = "tbone";
 	public static final String NAME = "TBone";
 	public static final String VERSION = "@VERSION@";
-	public static final String UPDATE_JSON = "https://raw.githubusercontent.com/T145/metalchests/master/update.json";
+	public static final String UPDATE_JSON = "https://raw.githubusercontent.com/T145/tbone/master/update.json";
 	public static final Logger LOG = LogManager.getLogger(NAME);
 
 	@Instance(ID)
