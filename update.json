@@ -1,0 +1,10 @@
+{
+    "homepage": "https://minecraft.curseforge.com/projects/tbone",
+    "1.12.2": {
+        "origin": "https://github.com/T145/tbone"
+    },
+    "promos": {
+        "1.12.2-latest": "origin",
+        "1.12.2-recommended": "origin"
+    }
+}
