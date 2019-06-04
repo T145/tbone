@@ -1,19 +1,17 @@
-<p align="center"><img src="https://i.imgur.com/Vsj2cT2.png"/></p>
+<img src="https://github.com/T145/tbone/blob/master/src/main/resources/assets/tbone/icon.jpg" align="right" width="180px"/>
 
-***
+# TBone
 
-[![downloads](http://cf.way2muchnoise.eu/full_metalchests_downloads.svg)](https://minecraft.curseforge.com/projects/metalchests)
-[![versions](http://cf.way2muchnoise.eu/versions/metalchests.svg)](https://minecraft.curseforge.com/projects/metalchests)
-[![packs](http://cf.way2muchnoise.eu/packs/metalchests.svg)](https://minecraft.curseforge.com/projects/metalchests)
+[>> Downloads <<](https://github.com/T145/tbone/releases)
 
 ---
 **_Table of Contents_**
 
-1. [Dependencies](https://github.com/T145/metalchests#dependencies)
-2. [Workspace Setup](https://github.com/T145/metalchests#workspace-setup)
-3. [Project License](https://github.com/T145/metalchests#license)
-4. [Dev Support](https://github.com/T145/metalchests#support)
-5. [Contributing](https://github.com/T145/metalchests/blob/master/.github/CONTRIBUTING.md)
+1. [Dependencies](https://github.com/T145/tbone#dependencies)
+2. [Workspace Setup](https://github.com/T145/tbone#workspace-setup)
+3. [Project License](https://github.com/T145/tbone#license)
+4. [Dev Support](https://github.com/T145/tbone#support)
+5. [Contributing](https://github.com/T145/tbone/blob/master/.github/CONTRIBUTING.md)
 
 ---
 
@@ -71,16 +69,6 @@ gradle idea
 
 ---
 
-## Development
-
-To add upgrade compatibility to your own vanilla-like chests, you can just make this call:
-```java
-UpgradeRegistry.registerChest((your chest block), (target metal chest block));
-```
-> The upgrade target MUST use the `IMetalChest.VARIANT` property!
-
----
-
 ## License
 
 Mod source code is licensed under the [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0).
@@ -98,10 +86,10 @@ To use any mod assets, you may contatct [myself](https://github.com/T145) or the
 
 <div align="center">
 
-**Paypal**: *Check the top right of the [CurseForge page](https://minecraft.curseforge.com/projects/metalchests)!*
+**Paypal**: *Check the top right of the [CurseForge page](https://minecraft.curseforge.com/projects/tbone)!*
 </div>
 
 <div align="center">
 
-**Cryptocurrency**: [Check here!](https://github.com/T145/metalchests/blob/master/.github/CRYPTO_ADDRESSES.md)
+**Cryptocurrency**: [Check here!](https://github.com/T145/tbone/blob/master/.github/CRYPTO_ADDRESSES.md)
 </div>
