@@ -4,7 +4,6 @@
 
 [>> Downloads <<](https://github.com/T145/tbone/releases)
 
----
 **_Table of Contents_**
 
 1. [Dependencies](https://github.com/T145/tbone#dependencies)
