@@ -2,7 +2,14 @@
 
 # TBone
 
-[>> Downloads <<](https://github.com/T145/tbone/releases)
+[![downloads](http://cf.way2muchnoise.eu/full_tbone_downloads.svg)](https://minecraft.curseforge.com/projects/tbone)
+<br />
+[![versions](http://cf.way2muchnoise.eu/versions/tbone.svg)](https://minecraft.curseforge.com/projects/tbone)
+<br />
+[![packs](http://cf.way2muchnoise.eu/packs/tbone.svg)](https://minecraft.curseforge.com/projects/tbone)
+<br />
+
+***
 
 **_Table of Contents_**
 
