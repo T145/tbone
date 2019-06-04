@@ -1,7 +1,6 @@
 <img src="https://github.com/T145/tbone/blob/master/src/main/resources/assets/tbone/icon.jpg" align="right" width="180px"/>
 
 # TBone
-
 <br />
 
 [![downloads](http://cf.way2muchnoise.eu/full_tbone_downloads.svg)](https://minecraft.curseforge.com/projects/tbone)
