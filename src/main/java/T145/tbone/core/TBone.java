@@ -1,5 +1,7 @@
 package T145.tbone.core;
 
+import java.util.LinkedList;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,16 +19,20 @@ import net.minecraft.util.datafix.walkers.ItemStackDataLists;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.ModMetadata;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
 
 @Mod(modid = TBone.ID, name = TBone.NAME, version = TBone.VERSION, updateJSON = TBone.UPDATE_JSON)
+@EventBusSubscriber(modid = TBone.ID)
 public class TBone {
 
 	/*
@@ -42,6 +48,16 @@ public class TBone {
 	public static final String VERSION = "@VERSION@";
 	public static final String UPDATE_JSON = "https://raw.githubusercontent.com/T145/tbone/master/update.json";
 	public static final Logger LOG = LogManager.getLogger(NAME);
+
+	private static LinkedList<UpdateChecker> UPDATES = new LinkedList<>();
+
+	public static void registerMod(String modId, String modName) {
+		UPDATES.add(new UpdateChecker(modId, modName));
+	}
+
+	public TBone() {
+		registerMod(ID, NAME);
+	}
 
 	@Instance(ID)
 	public static TBone instance;
@@ -59,6 +75,15 @@ public class TBone {
 		meta.url = "https://github.com/T145/tbone";
 		meta.useDependencyInformation = false;
 		meta.version = VERSION;
+	}
+
+	@SubscribeEvent
+	public static void tbone$playerLogin(PlayerLoggedInEvent event) {
+		for (UpdateChecker update : UPDATES) {
+			if (update.hasUpdate()) {
+				event.player.sendMessage(update.getUpdateNotification());
+			}
+		}
 	}
 
 	public static void registerInventoryFixes(DataFixer fixer, FixTypes type, Class clazz) {
