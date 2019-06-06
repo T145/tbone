@@ -25,6 +25,10 @@ public class ChestHandler extends ItemStackHandler {
 
 	private boolean updateComparator;
 
+	public ChestHandler(int size) {
+		super(size);
+	}
+
 	@Override
 	protected void onLoad() {
 		// Perhaps usable for something?
