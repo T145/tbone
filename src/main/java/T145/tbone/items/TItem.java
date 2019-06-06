@@ -15,6 +15,8 @@
  ******************************************************************************/
 package T145.tbone.items;
 
+import java.util.List;
+
 import T145.tbone.api.ITItem;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -32,6 +34,10 @@ public class TItem extends Item implements ITItem {
 	public TItem(ResourceLocation resource, IStringSerializable[] types, CreativeTabs tab) {
 		this.initItem(this, resource, types, tab);
 		this.types = types;
+	}
+
+	public TItem(List<? extends IStringSerializable> types, ResourceLocation resource, CreativeTabs tab) {
+		this(resource, (IStringSerializable[]) types.toArray(), tab);
 	}
 
 	public TItem(ResourceLocation resource, CreativeTabs tab) {

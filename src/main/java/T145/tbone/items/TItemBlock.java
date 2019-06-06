@@ -15,6 +15,8 @@
  ******************************************************************************/
 package T145.tbone.items;
 
+import java.util.List;
+
 import T145.tbone.api.ITItem;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
@@ -33,6 +35,10 @@ public class TItemBlock extends ItemBlock implements ITItem {
 		super(block);
 		this.initItem(this, block.getRegistryName(), types, block.getCreativeTab());
 		this.types = types;
+	}
+
+	public TItemBlock(List<? extends IStringSerializable> types, Block block) {
+		this(block, (IStringSerializable[]) types.toArray());
 	}
 
 	public TItemBlock(Block block) {
