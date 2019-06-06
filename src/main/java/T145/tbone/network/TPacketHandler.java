@@ -34,7 +34,7 @@ public abstract class TPacketHandler {
 		this.network = NetworkRegistry.INSTANCE.newSimpleChannel(modId);
 	}
 
-	private void registerMessage(Class<? extends TMessage> clazz, Side side) {
+	protected void registerMessage(Class<? extends TMessage> clazz, Side side) {
 		network.registerMessage((msg, ctx) -> {
 			IThreadListener thread = FMLCommonHandler.instance().getWorldThread(ctx.netHandler);
 			thread.addScheduledTask(() -> msg.process(ctx));
