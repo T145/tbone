@@ -27,6 +27,7 @@ import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -40,25 +41,30 @@ public abstract class BehaviorDispenseMinecart extends BehaviorDefaultDispenseIt
 		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(item, behavior);
 	}
 
-	private EnumRailDirection getRailDirection(IBlockSource source, BlockPos pos) {
-		IBlockState state = source.getBlockState();
+	private EnumRailDirection getRailDirection(IBlockState state, World world, BlockPos pos) {
 		Block block = state.getBlock();
 
 		if (block instanceof BlockRailBase) {
 			BlockRailBase rail = (BlockRailBase) block;
-			return rail.getRailDirection(source.getWorld(), pos, state, null);
-		} else {
-			return EnumRailDirection.NORTH_SOUTH;
+			return rail.getRailDirection(world, pos, state, null);
 		}
+
+		return EnumRailDirection.NORTH_SOUTH;
 	}
 
 	public abstract EntityMinecart getMinecartEntity(World world, double x, double y, double z, ItemStack stack);
 
-	public void placeStack(EntityPlayer player, EnumHand hand, World world, BlockPos pos, IBlockState state) {
+	public EnumActionResult placeStack(EntityPlayer player, EnumHand hand, World world, BlockPos pos) {
+		IBlockState state = world.getBlockState(pos);
+
+		if (!BlockRailBase.isRailBlock(state)) {
+			return EnumActionResult.FAIL;
+		}
+
 		ItemStack stack = player.getHeldItem(hand);
 
 		if (!world.isRemote) {
-			BlockRailBase.EnumRailDirection dir = state.getBlock() instanceof BlockRailBase ? ((BlockRailBase) state.getBlock()).getRailDirection(world, pos, state, null) : BlockRailBase.EnumRailDirection.NORTH_SOUTH;
+			EnumRailDirection dir = getRailDirection(state, world, pos);
 			double yOffset = 0.0D;
 
 			if (dir.isAscending()) {
@@ -69,6 +75,8 @@ public abstract class BehaviorDispenseMinecart extends BehaviorDefaultDispenseIt
 		}
 
 		stack.shrink(1);
+
+		return EnumActionResult.SUCCESS;
 	}
 
 	@Override
@@ -80,13 +88,13 @@ public abstract class BehaviorDispenseMinecart extends BehaviorDefaultDispenseIt
 		double yOffset = 0.0D;
 
 		if (BlockRailBase.isRailBlock(state)) {
-			yOffset = getRailDirection(source, pos).isAscending() ? 0.6D : 0.1D;
+			yOffset = getRailDirection(state, world, pos).isAscending() ? 0.6D : 0.1D;
 		} else {
 			if (state.getMaterial() != Material.AIR || !BlockRailBase.isRailBlock(world.getBlockState(pos.down()))) {
 				return dispenseBehavior.dispense(source, stack);
 			}
 
-			yOffset -= front != EnumFacing.DOWN && getRailDirection(source, pos.down()).isAscending() ? 0.4D : 0.9D;
+			yOffset -= front != EnumFacing.DOWN && getRailDirection(state, world, pos.down()).isAscending() ? 0.4D : 0.9D;
 		}
 
 		yOffset += Math.floor(source.getY()) + front.getYOffset();
