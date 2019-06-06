@@ -67,4 +67,15 @@ public interface ITItem {
 			items.add(new ItemStack(item));
 		}
 	}
+
+	@SideOnly(Side.CLIENT)
+	default void getSubItems(Item item, CreativeTabs tab, NonNullList<ItemStack> items) {
+		if (item.getCreativeTab() == tab) {
+			if (item.getHasSubtypes()) {
+				this.prepareCreativeTab(item, items);
+			} else {
+				items.add(new ItemStack(item));
+			}
+		}
+	}
 }

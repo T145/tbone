@@ -55,6 +55,7 @@ public class TItemBlock extends ItemBlock implements ITItem {
 		return this.getCreatorModId(stack, getCreativeTab());
 	}
 
+	// NOTE: JEI doesn't like do anything clever w/ this, so just leave it like this.
 	@Override
 	public String getTranslationKey(ItemStack stack) {
 		if (hasSubtypes) {
@@ -66,12 +67,6 @@ public class TItemBlock extends ItemBlock implements ITItem {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
-		if (this.getCreativeTab() == tab) {
-			if (hasSubtypes) {
-				this.prepareCreativeTab(this, items);
-			} else {
-				items.add(new ItemStack(this));
-			}
-		}
+		getSubItems(this, tab, items);
 	}
 }
