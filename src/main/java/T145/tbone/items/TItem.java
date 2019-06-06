@@ -15,9 +15,7 @@
  ******************************************************************************/
 package T145.tbone.items;
 
-import org.apache.commons.lang3.StringUtils;
-
-import T145.tbone.core.TBone;
+import T145.tbone.api.ITItem;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -27,74 +25,40 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TItem extends Item {
+public class TItem extends Item implements ITItem {
 
 	protected final IStringSerializable[] types;
-	protected final CreativeTabs tab;
 
 	public TItem(ResourceLocation resource, IStringSerializable[] types, CreativeTabs tab) {
-		setHasSubtypes(types != null);
-
-		if (hasSubtypes) {
-			// validate the types we'll use to build items out of
-			try {
-				for (IStringSerializable type : types) {
-					if (type == null) {
-						throw new NullPointerException(" [ItemMod] Cannot build items out of null objects in \"types\"!");
-					}
-				}
-			} catch (NullPointerException err) {
-				TBone.LOG.catching(err);
-				TBone.LOG.error(String.format(" [ItemMod] %s", types.toString()));
-			}
-		}
-
+		this.initItem(this, resource, types, tab);
 		this.types = types;
-		this.tab = tab;
-
-		setRegistryName(resource);
-		setTranslationKey(resource.toString());
-		setCreativeTab(tab);
 	}
 
 	public TItem(ResourceLocation resource, CreativeTabs tab) {
 		this(resource, null, tab);
 	}
 
+	@Override
 	public IStringSerializable[] getTypes() {
 		return types;
 	}
 
 	@Override
 	public String getCreatorModId(ItemStack stack) {
-		return tab.getTabLabel().replace("itemGroup.", StringUtils.EMPTY);
+		return this.getCreatorModId(stack, getCreativeTab());
 	}
 
 	@Override
 	public String getTranslationKey(ItemStack stack) {
-		if (hasSubtypes) {
-			return String.format("%s.%s", super.getTranslationKey(), types[stack.getMetadata()].getName());
-		}
-		return super.getTranslationKey(stack);
+		return this.getTranslationKey(this, stack);
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void prepareCreativeTab(NonNullList<ItemStack> items) {
-		if (hasSubtypes) {
-			for (int meta = 0; meta < types.length; ++meta) {
-				items.add(new ItemStack(this, 1, meta));
-			}
-		} else {
-			items.add(new ItemStack(this));
-		}
-	}
-
 	@Override
-	@SideOnly(Side.CLIENT)
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
-		if (this.tab == tab) {
+		if (this.getCreativeTab() == tab) {
 			if (hasSubtypes) {
-				prepareCreativeTab(items);
+				this.prepareCreativeTab(this, items);
 			} else {
 				items.add(new ItemStack(this));
 			}
