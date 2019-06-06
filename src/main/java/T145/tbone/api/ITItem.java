@@ -60,8 +60,9 @@ public interface ITItem {
 	default String getTranslationKey(Item item, ItemStack stack) {
 		if (item.getHasSubtypes()) {
 			return String.format("%s.%s", item.getTranslationKey(), getTypes()[stack.getMetadata()].getName());
+		} else {
+			return item.getTranslationKey(stack);
 		}
-		return item.getTranslationKey(stack);
 	}
 
 	@SideOnly(Side.CLIENT)
