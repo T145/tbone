@@ -50,11 +50,6 @@ public class TItem extends Item implements ITItem {
 	}
 
 	@Override
-	public int getMetadata(int meta) {
-		return this.hasSubtypes ? meta : 0;
-	}
-
-	@Override
 	public String getCreatorModId(ItemStack stack) {
 		return this.getCreatorModId(stack, getCreativeTab());
 	}
