@@ -13,12 +13,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockModItem extends ItemBlock {
+public class TItemBlock extends ItemBlock {
 
 	protected final IStringSerializable[] types;
 	protected final CreativeTabs tab;
 
-	public BlockModItem(Block block, IStringSerializable[] types) {
+	public TItemBlock(Block block, IStringSerializable[] types) {
 		super(block);
 
 		setHasSubtypes(types != null);
@@ -46,7 +46,7 @@ public class BlockModItem extends ItemBlock {
 		setCreativeTab(tab);
 	}
 
-	public BlockModItem(Block block) {
+	public TItemBlock(Block block) {
 		this(block, null);
 	}
 

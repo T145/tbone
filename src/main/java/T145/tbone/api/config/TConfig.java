@@ -5,9 +5,9 @@ import net.minecraftforge.common.config.Config;
 
 @Config(modid = TBone.ID, name = "T145/" + TBone.NAME)
 @Config.LangKey(TBone.ID)
-public class ConfigTBone {
+public class TConfig {
 
-	private ConfigTBone() {}
+	private TConfig() {}
 
 	@Config.Comment("Whether or not you want to recieve an in-game notification if updates are available for all supported mods.")
 	public static boolean checkForUpdates = true;

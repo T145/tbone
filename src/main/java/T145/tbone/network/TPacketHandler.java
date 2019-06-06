@@ -23,18 +23,18 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 
-public abstract class PacketHandler {
+public abstract class TPacketHandler {
 
 	protected final String modId;
 	protected final SimpleNetworkWrapper network;
 	private byte id;
 
-	public PacketHandler(String modId) {
+	public TPacketHandler(String modId) {
 		this.modId = modId;
 		this.network = NetworkRegistry.INSTANCE.newSimpleChannel(modId);
 	}
 
-	private void registerMessage(Class<? extends MessageBase> clazz, Side side) {
+	private void registerMessage(Class<? extends TMessage> clazz, Side side) {
 		network.registerMessage((msg, ctx) -> {
 			IThreadListener thread = FMLCommonHandler.instance().getWorldThread(ctx.netHandler);
 			thread.addScheduledTask(() -> msg.process(ctx));
@@ -48,7 +48,7 @@ public abstract class PacketHandler {
 		return new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 64D);
 	}
 
-	public void sendToAllAround(MessageBase msg, World world, BlockPos pos) {
+	public void sendToAllAround(TMessage msg, World world, BlockPos pos) {
 		network.sendToAllAround(msg, getTargetPoint(world, pos));
 	}
 }

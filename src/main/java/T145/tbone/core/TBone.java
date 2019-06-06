@@ -5,8 +5,8 @@ import java.util.LinkedList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import T145.tbone.api.config.ConfigTBone;
-import T145.tbone.blocks.BlockModItem;
+import T145.tbone.api.config.TConfig;
+import T145.tbone.blocks.TItemBlock;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -90,7 +90,7 @@ public class TBone {
 
 	@SubscribeEvent
 	public static void tbone$playerLogin(PlayerLoggedInEvent event) {
-		if (ConfigTBone.checkForUpdates) {
+		if (TConfig.checkForUpdates) {
 			for (UpdateChecker update : UPDATES) {
 				if (update.hasUpdate()) {
 					event.player.sendMessage(update.getUpdateNotification());
@@ -108,11 +108,11 @@ public class TBone {
 	}
 
 	public static void registerItemBlock(IForgeRegistry<Item> registry, Block block) {
-		registry.register(new BlockModItem(block));
+		registry.register(new TItemBlock(block));
 	}
 
 	public static void registerItemBlock(IForgeRegistry<Item> registry, Block block, IStringSerializable[] types) {
-		registry.register(new BlockModItem(block, types));
+		registry.register(new TItemBlock(block, types));
 	}
 
 	@SideOnly(Side.CLIENT)

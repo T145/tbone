@@ -28,7 +28,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public abstract class MessageBase implements IMessage {
+public abstract class TMessage implements IMessage {
 
 	@SideOnly(Side.CLIENT)
 	protected World getClientWorld() {

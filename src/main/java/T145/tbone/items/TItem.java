@@ -27,12 +27,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemMod extends Item {
+public class TItem extends Item {
 
 	protected final IStringSerializable[] types;
 	protected final CreativeTabs tab;
 
-	public ItemMod(ResourceLocation resource, IStringSerializable[] types, CreativeTabs tab) {
+	public TItem(ResourceLocation resource, IStringSerializable[] types, CreativeTabs tab) {
 		setHasSubtypes(types != null);
 
 		if (hasSubtypes) {
@@ -57,7 +57,7 @@ public class ItemMod extends Item {
 		setCreativeTab(tab);
 	}
 
-	public ItemMod(ResourceLocation resource, CreativeTabs tab) {
+	public TItem(ResourceLocation resource, CreativeTabs tab) {
 		this(resource, null, tab);
 	}
 
