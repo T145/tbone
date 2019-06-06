@@ -57,14 +57,6 @@ public interface ITItem {
 		return tab.getTabLabel().replace("itemGroup.", StringUtils.EMPTY);
 	}
 
-	default String getTranslationKey(Item item, ItemStack stack) {
-		if (item.getHasSubtypes()) {
-			return String.format("%s.%s", item.getTranslationKey(), getTypes()[stack.getMetadata()].getName());
-		} else {
-			return item.getTranslationKey(stack);
-		}
-	}
-
 	@SideOnly(Side.CLIENT)
 	default void prepareCreativeTab(Item item, NonNullList<ItemStack> items) {
 		if (item.getHasSubtypes()) {

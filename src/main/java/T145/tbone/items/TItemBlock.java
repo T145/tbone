@@ -62,7 +62,10 @@ public class TItemBlock extends ItemBlock implements ITItem {
 
 	@Override
 	public String getTranslationKey(ItemStack stack) {
-		return this.getTranslationKey(this, stack);
+		if (hasSubtypes) {
+			return String.format("%s.%s", super.getTranslationKey(), types[stack.getMetadata()].getName());
+		}
+		return super.getTranslationKey(stack);
 	}
 
 	@SideOnly(Side.CLIENT)
