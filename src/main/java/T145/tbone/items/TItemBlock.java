@@ -38,7 +38,7 @@ public class TItemBlock extends ItemBlock implements ITItem {
 	}
 
 	public TItemBlock(List<? extends IStringSerializable> types, Block block) {
-		this(block, (IStringSerializable[]) types.toArray());
+		this(block, types.toArray(new IStringSerializable[types.size()]));
 	}
 
 	public TItemBlock(Block block) {

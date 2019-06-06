@@ -37,7 +37,7 @@ public class TItem extends Item implements ITItem {
 	}
 
 	public TItem(List<? extends IStringSerializable> types, ResourceLocation resource, CreativeTabs tab) {
-		this(resource, (IStringSerializable[]) types.toArray(), tab);
+		this(resource, types.toArray(new IStringSerializable[types.size()]), tab);
 	}
 
 	public TItem(ResourceLocation resource, CreativeTabs tab) {
