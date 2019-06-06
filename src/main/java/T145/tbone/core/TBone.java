@@ -15,7 +15,7 @@
  ******************************************************************************/
 package T145.tbone.core;
 
-import java.util.LinkedList;
+import java.util.ArrayDeque;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -68,7 +68,7 @@ public class TBone {
 	public static final String UPDATE_JSON = "https://raw.githubusercontent.com/T145/tbone/master/update.json";
 	public static final Logger LOG = LogManager.getLogger(NAME);
 
-	private static LinkedList<UpdateChecker> UPDATES = new LinkedList<>();
+	private static final ArrayDeque<UpdateChecker> UPDATES = new ArrayDeque<>();
 
 	public static void registerMod(String modId, String modName) {
 		UPDATES.add(new UpdateChecker(modId, modName));
