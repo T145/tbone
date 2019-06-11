@@ -34,6 +34,10 @@ public abstract class TPacketHandler {
 		this.network = NetworkRegistry.INSTANCE.newSimpleChannel(modId);
 	}
 
+	public SimpleNetworkWrapper getNetwork() {
+		return network;
+	}
+
 	protected void registerMessage(Class<? extends TMessage> clazz, Side side) {
 		network.registerMessage((msg, ctx) -> {
 			IThreadListener thread = FMLCommonHandler.instance().getWorldThread(ctx.netHandler);
