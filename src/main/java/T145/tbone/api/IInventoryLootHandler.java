@@ -50,6 +50,8 @@ public interface IInventoryLootHandler extends IInventoryHandler, ILockableConta
 		}
 	}
 
+	public void setLootTable(ResourceLocation lootTable, long lootTableSeed);
+
 	@Override
 	default boolean isLocked() {
 		return false;
