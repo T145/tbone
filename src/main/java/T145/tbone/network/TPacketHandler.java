@@ -15,11 +15,14 @@
  ******************************************************************************/
 package T145.tbone.network;
 
+import T145.tbone.api.network.IPositionedMessage;
+import T145.tbone.api.network.IWorldPositionedMessage;
 import net.minecraft.util.IThreadListener;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 
@@ -48,11 +51,24 @@ public abstract class TPacketHandler {
 
 	public abstract void registerMessages();
 
-	public NetworkRegistry.TargetPoint getTargetPoint(World world, BlockPos pos) {
-		return new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 64D);
+	public TargetPoint getTargetPoint(World world, BlockPos pos) {
+		return new TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 16D);
 	}
 
 	public void sendToAllAround(TMessage msg, World world, BlockPos pos) {
 		network.sendToAllAround(msg, getTargetPoint(world, pos));
+	}
+
+	public void sendToAllAround(TMessage msg, World world) {
+		if (msg instanceof IPositionedMessage) {
+			network.sendToAllAround(msg, getTargetPoint(world, ((IPositionedMessage) msg).getPos()));
+		}
+	}
+
+	public void sendToAllAround(TMessage msg) {
+		if (msg instanceof IWorldPositionedMessage) {
+			IWorldPositionedMessage m = (IWorldPositionedMessage) msg;
+			network.sendToAllAround(msg, getTargetPoint(m.getWorld(), m.getPos()));
+		}
 	}
 }
