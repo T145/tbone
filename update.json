@@ -4,10 +4,11 @@
         "v1.0.0+mc1.12.2": "https://github.com/T145/tbone/releases/tag/v1.0.0",
         "v1.1.2+mc1.12.2": "https://github.com/T145/tbone/releases/tag/v1.1.2",
         "v1.2.2+mc1.12.2": "https://github.com/T145/tbone/releases/tag/v1.2.2",
-        "v1.2.6+mc1.12.2": "https://github.com/T145/tbone/releases/tag/v1.2.6"
+        "v1.2.6+mc1.12.2": "https://github.com/T145/tbone/releases/tag/v1.2.6",
+        "v1.3.0+mc1.12.2": "https://github.com/T145/tbone/releases/tag/v1.3.0"
     },
     "promos": {
-        "1.12.2-latest": "v1.2.6+mc1.12.2",
-        "1.12.2-recommended": "v1.2.6+mc1.12.2"
+        "1.12.2-latest": "v1.3.0+mc1.12.2",
+        "1.12.2-recommended": "v1.3.0+mc1.12.2"
     }
 }
