@@ -64,14 +64,19 @@ public abstract class BehaviorDispenseMinecart extends BehaviorDefaultDispenseIt
 		ItemStack stack = player.getHeldItem(hand);
 
 		if (!world.isRemote) {
-			EnumRailDirection dir = getRailDirection(state, world, pos);
 			double yOffset = 0.0D;
 
-			if (dir.isAscending()) {
+			if (getRailDirection(state, world, pos).isAscending()) {
 				yOffset = 0.5D;
 			}
 
-			world.spawnEntity(getMinecartEntity(world, pos.getX() + 0.5D, pos.getY() + 0.0625D + yOffset, pos.getZ() + 0.5D, stack));
+			EntityMinecart cart = getMinecartEntity(world, pos.getX() + 0.5D, pos.getY() + 0.0625D + yOffset, pos.getZ() + 0.5D, stack);
+
+			if (stack.hasDisplayName()) {
+				cart.setCustomNameTag(stack.getDisplayName());
+			}
+
+			world.spawnEntity(cart);
 		}
 
 		stack.shrink(1);
@@ -101,7 +106,13 @@ public abstract class BehaviorDispenseMinecart extends BehaviorDefaultDispenseIt
 
 		double xOffset = source.getX() + front.getXOffset() * 1.125D;
 		double zOffset = source.getZ() + front.getZOffset() * 1.125D;
-		world.spawnEntity(getMinecartEntity(world, xOffset, yOffset, zOffset, stack));
+		EntityMinecart cart = getMinecartEntity(world, xOffset, yOffset, zOffset, stack);
+
+		if (stack.hasDisplayName()) {
+			cart.setCustomNameTag(stack.getDisplayName());
+		}
+
+		world.spawnEntity(cart);
 		stack.shrink(1);
 
 		return stack;
