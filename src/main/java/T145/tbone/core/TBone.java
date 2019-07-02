@@ -127,7 +127,7 @@ public class TBone {
 	}
 
 	public static void registerItemBlock(IForgeRegistry<Item> registry, Block block, IStringSerializable[] types) {
-		registry.register(new TItemBlock(block, types));
+		registry.register(new TItemBlock(types, block));
 	}
 
 	@SideOnly(Side.CLIENT)

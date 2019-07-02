@@ -15,6 +15,7 @@
  ******************************************************************************/
 package T145.tbone.items;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import T145.tbone.api.ITItem;
@@ -31,18 +32,22 @@ public class TItemBlock extends ItemBlock implements ITItem {
 
 	protected final IStringSerializable[] types;
 
-	public TItemBlock(Block block, IStringSerializable[] types) {
+	public TItemBlock(IStringSerializable[] types, Block block) {
 		super(block);
 		this.initItem(this, block.getRegistryName(), types, block.getCreativeTab());
 		this.types = types;
 	}
 
 	public TItemBlock(List<? extends IStringSerializable> types, Block block) {
-		this(block, types.toArray(new IStringSerializable[types.size()]));
+		this(types.toArray(new IStringSerializable[types.size()]), block);
+	}
+
+	public TItemBlock(LinkedList<? extends IStringSerializable> types, Block block) {
+		this(types.toArray(new IStringSerializable[types.size()]), block);
 	}
 
 	public TItemBlock(Block block) {
-		this(block, null);
+		this((IStringSerializable[]) null, block);
 	}
 
 	@Override
