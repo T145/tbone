@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package T145.tbone.network;
+package T145.tbone.net;
 
 import T145.tbone.api.network.IPositionedMessage;
 import T145.tbone.api.network.IWorldPositionedMessage;

@@ -26,4 +26,10 @@ public class TConfig {
 
 	@Config.Comment("Whether or not you want to recieve an in-game notification if updates are available for all supported mods.")
 	public static boolean checkForUpdates = true;
+
+	@Config.Comment("If the recipe book and all associated functionality are fully removed.")
+	public static boolean removeRecipeBook = true;
+
+	@Config.Comment("If a testing variant of shift-click crafting is enabled.")
+	public static boolean experimentalShiftCrafting = true;
 }

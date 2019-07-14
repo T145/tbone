@@ -1,12 +1,12 @@
 package shadows.fastbench.gui;
 
+import T145.tbone.api.config.TConfig;
 import net.minecraft.client.gui.inventory.GuiCrafting;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import shadows.fastbench.FastBench;
 
 @SideOnly(Side.CLIENT)
 public class GuiFastBench extends GuiCrafting {
@@ -23,7 +23,7 @@ public class GuiFastBench extends GuiCrafting {
 	@Override
 	public void initGui() {
 		super.initGui();
-		if (FastBench.removeRecipeBook) {
+		if (TConfig.removeRecipeBook) {
 			this.buttonList.clear();
 			this.recipeButton = null;
 			this.recipeBookGui = new GuiDedBook();

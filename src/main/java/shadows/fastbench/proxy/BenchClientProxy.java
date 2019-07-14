@@ -1,5 +1,6 @@
 package shadows.fastbench.proxy;
 
+import T145.tbone.core.TWorkbench;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiButtonImage;
@@ -12,7 +13,6 @@ import net.minecraft.server.integrated.IntegratedServer;
 import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import shadows.fastbench.FastBench;
 import shadows.fastbench.book.DedClientBook;
 import shadows.fastbench.net.HijackedPlayerList;
 
@@ -22,7 +22,7 @@ public class BenchClientProxy implements IBenchProxy {
 
 	@Override
 	public void deleteBook(Entity e) {
-		if (e instanceof EntityPlayerMP) ((EntityPlayerMP) e).recipeBook = FastBench.SERVER_BOOK;
+		if (e instanceof EntityPlayerMP) ((EntityPlayerMP) e).recipeBook = TWorkbench.SERVER_BOOK;
 		if (e instanceof EntityPlayerSP) ((EntityPlayerSP) e).recipeBook = CLIENT_BOOK;
 	}
 
