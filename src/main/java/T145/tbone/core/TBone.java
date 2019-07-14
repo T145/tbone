@@ -15,13 +15,13 @@
  ******************************************************************************/
 package T145.tbone.core;
 
-import java.util.ArrayDeque;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import T145.tbone.api.config.TConfig;
 import T145.tbone.items.TItemBlock;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -51,24 +51,16 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
 
 @Mod(modid = TBone.ID, name = TBone.NAME, version = TBone.VERSION, updateJSON = TBone.UPDATE_JSON)
-@EventBusSubscriber(modid = TBone.ID)
+@EventBusSubscriber
 public class TBone {
 
-	/*
-	 * These variables are localized here b/c this mod is a library,
-	 * and essentially is an API. Therefore, it doesn't need an actual
-	 * API package to interact w/ it (unless some part of it needs to
-	 * be modified by a mod in the future).
-	 * 
-	 * - T145
-	 */
 	public static final String ID = "tbone";
 	public static final String NAME = "TBone";
 	public static final String VERSION = "@VERSION@";
 	public static final String UPDATE_JSON = "https://raw.githubusercontent.com/T145/tbone/master/update.json";
 	public static final Logger LOG = LogManager.getLogger(NAME);
 
-	private static final ArrayDeque<UpdateChecker> UPDATES = new ArrayDeque<>();
+	private static final ObjectList<UpdateChecker> UPDATES = new ObjectArrayList<>();
 
 	public static void registerMod(String modId, String modName) {
 		UPDATES.add(new UpdateChecker(modId, modName));
@@ -106,9 +98,9 @@ public class TBone {
 	@SubscribeEvent
 	public static void tbone$playerLogin(PlayerLoggedInEvent event) {
 		if (TConfig.checkForUpdates) {
-			for (UpdateChecker update : UPDATES) {
-				if (update.hasUpdate()) {
-					event.player.sendMessage(update.getUpdateNotification());
+			for (UpdateChecker mod : UPDATES) {
+				if (mod.hasUpdate()) {
+					event.player.sendMessage(mod.getUpdateNotification());
 				}
 			}
 		}
