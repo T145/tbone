@@ -1,16 +1,22 @@
 package me.paulf.rbeacons.server.block;
 
-import me.paulf.rbeacons.server.block.entity.ResponsiveBeaconEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBeacon;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public final class ResponsiveBeaconBlock extends BlockBeacon {
-	public ResponsiveBeaconBlock() {
-		this.setLightLevel(1.0F);
+public final class BlockResponsiveBeacon extends BlockBeacon {
+
+	public BlockResponsiveBeacon() {
+		this.setLightLevel(1);
+		this.setSoundType(SoundType.GLASS);
+		this.setCreativeTab(CreativeTabs.MISC);
+		this.setTranslationKey("beacon");
+		this.setRegistryName("minecraft", "beacon");
 	}
 
 	@Override
@@ -20,7 +26,7 @@ public final class ResponsiveBeaconBlock extends BlockBeacon {
 
 	@Override
 	public TileEntity createTileEntity(final World world, final IBlockState state) {
-		return new ResponsiveBeaconEntity();
+		return new TileResponsiveBeacon();
 	}
 
 	@Override

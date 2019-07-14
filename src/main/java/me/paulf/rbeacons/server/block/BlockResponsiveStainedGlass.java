@@ -7,11 +7,14 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public final class ResponsiveStainedGlassBlock extends BlockStainedGlass {
-	public ResponsiveStainedGlassBlock() {
+public final class BlockResponsiveStainedGlass extends BlockStainedGlass {
+
+	public BlockResponsiveStainedGlass() {
 		super(Material.GLASS);
 		this.setHardness(0.3F);
 		this.setSoundType(SoundType.GLASS);
+		this.setTranslationKey("stainedGlass");
+		this.setRegistryName("minecraft", "stained_glass");
 	}
 
 	@Override

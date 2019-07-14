@@ -37,7 +37,7 @@ public final class BeaconLookup {
 		this.count = count;
 	}
 
-	void notifyBelow(final IBlockAccess world, final BlockPos source) {
+	public void notifyBelow(final IBlockAccess world, final BlockPos source) {
 		if (this.columns != null) {
 			final int columnIndex = this.toColumnIndex(source);
 			@Nullable final IntList column = this.columns[columnIndex];
@@ -66,7 +66,7 @@ public final class BeaconLookup {
 		}
 	}
 
-	void notifyAround(final IBlockAccess world, final BlockPos source, final int range) {
+	public void notifyAround(final IBlockAccess world, final BlockPos source, final int range) {
 		if (this.sectors != null) {
 			final int minY = source.getY() + 1;
 			final int maxY = source.getY() + range;

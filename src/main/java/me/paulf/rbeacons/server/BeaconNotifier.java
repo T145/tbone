@@ -2,10 +2,10 @@ package me.paulf.rbeacons.server;
 
 import javax.annotation.Nullable;
 
+import T145.tbone.core.TBeacon;
 import it.unimi.dsi.fastutil.objects.Reference2FloatMap;
 import it.unimi.dsi.fastutil.objects.Reference2FloatMaps;
 import me.paulf.rbeacons.server.event.RegistryAvailableEvent;
-import me.paulf.rbeacons.server.level.chunk.BeaconLookups;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -19,6 +19,7 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public final class BeaconNotifier {
+
 	private Reference2FloatMap<IBlockState> materials;
 
 	private BeaconNotifier(final Reference2FloatMap<IBlockState> materials) {
@@ -44,12 +45,13 @@ public final class BeaconNotifier {
 	}
 
 	private final class WorldListener implements IWorldEventListener {
+
 		@Override
 		public void notifyBlockUpdate(final World world, final BlockPos pos, final IBlockState oldState, final IBlockState newState, final int flags) {
 			if (oldState != newState) {
-				BeaconLookups.notifyBelow(world, pos);
+				TBeacon.notifyBelow(world, pos);
 				if (BeaconNotifier.this.getMaterial(oldState) != BeaconNotifier.this.getMaterial(newState)) {
-					BeaconLookups.notifyAround(world, pos);
+					TBeacon.notifyAround(world, pos);
 				}
 			}
 		}

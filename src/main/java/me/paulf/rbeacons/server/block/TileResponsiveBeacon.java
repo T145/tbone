@@ -1,21 +1,22 @@
-package me.paulf.rbeacons.server.block.entity;
+package me.paulf.rbeacons.server.block;
 
-import me.paulf.rbeacons.server.level.chunk.BeaconLookups;
+import T145.tbone.core.TBeacon;
 import net.minecraft.tileentity.TileEntityBeacon;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public final class ResponsiveBeaconEntity extends TileEntityBeacon {
+public final class TileResponsiveBeacon extends TileEntityBeacon {
+
 	@Override
 	public void onLoad() {
 		this.updateBeacon();
-		BeaconLookups.get(this.world, this.pos).add(this.pos);
+		TBeacon.get(this.world, this.pos).add(this.pos);
 	}
 
 	@Override
 	public void invalidate() {
 		super.invalidate();
-		BeaconLookups.get(this.world, this.pos).remove(this.pos);
+		TBeacon.get(this.world, this.pos).remove(this.pos);
 	}
 
 	@Override
