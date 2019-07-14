@@ -123,11 +123,11 @@ public class TBone {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public static ModelResourceLocation getCustomModel(String modId, Item item, String customDomain, StringBuilder variantPath) {
+	public static ModelResourceLocation getCustomModel(String modId, Item item, String customDomain, String variantPath) {
 		if (StringUtils.isNullOrEmpty(customDomain)) {
-			return new ModelResourceLocation(item.getRegistryName(), variantPath.toString());
+			return new ModelResourceLocation(item.getRegistryName(), variantPath);
 		} else {
-			return new ModelResourceLocation(String.format("%s:%s", modId, customDomain), variantPath.toString());
+			return new ModelResourceLocation(String.format("%s:%s", modId, customDomain), variantPath);
 		}
 	}
 
@@ -139,7 +139,7 @@ public class TBone {
 			path.append(',').append(variants[i]);
 		}
 
-		ModelLoader.setCustomModelResourceLocation(item, meta, getCustomModel(modId, item, domain, path));
+		ModelLoader.setCustomModelResourceLocation(item, meta, getCustomModel(modId, item, domain, path.toString()));
 	}
 
 	@SideOnly(Side.CLIENT)
