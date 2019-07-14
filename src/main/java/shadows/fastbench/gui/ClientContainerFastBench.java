@@ -12,7 +12,6 @@ public class ClientContainerFastBench extends ContainerFastBench {
 	}
 
 	@Override
-	protected void slotChangedCraftingGrid(World world, EntityPlayer player, InventoryCrafting inv, InventoryCraftResult result) {
-	}
+	protected void slotChangedCraftingGrid(World world, EntityPlayer player, InventoryCrafting inv, InventoryCraftResult result) {}
 
 }

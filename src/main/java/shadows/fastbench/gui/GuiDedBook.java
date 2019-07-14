@@ -16,16 +16,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiDedBook extends GuiRecipeBook {
 
 	@Override
-	public void func_194303_a(int width, int height, Minecraft minecraft, boolean widthTooNarrow, InventoryCrafting craftingSlots) {
-	}
+	public void func_194303_a(int width, int height, Minecraft minecraft, boolean widthTooNarrow, InventoryCrafting craftingSlots) {}
 
 	@Override
-	public void initVisuals(boolean widthTooNarrow, InventoryCrafting craftingSlots) {
-	}
+	public void initVisuals(boolean widthTooNarrow, InventoryCrafting craftingSlots) {}
 
 	@Override
-	public void removed() {
-	}
+	public void removed() {}
 
 	@Override
 	public int updateScreenPosition(boolean widthTooNarrow, int width, int xSize) {
@@ -33,8 +30,7 @@ public class GuiDedBook extends GuiRecipeBook {
 	}
 
 	@Override
-	public void toggleVisibility() {
-	}
+	public void toggleVisibility() {}
 
 	@Override
 	public boolean isVisible() {
@@ -42,24 +38,19 @@ public class GuiDedBook extends GuiRecipeBook {
 	}
 
 	@Override
-	public void slotClicked(@Nullable Slot slotIn) {
-	}
+	public void slotClicked(@Nullable Slot slotIn) {}
 
 	@Override
-	public void tick() {
-	}
+	public void tick() {}
 
 	@Override
-	public void render(int mouseX, int mouseY, float partialTicks) {
-	}
+	public void render(int mouseX, int mouseY, float partialTicks) {}
 
 	@Override
-	public void renderTooltip(int guiLeft, int guiTop, int mouseX, int mouseY) {
-	}
+	public void renderTooltip(int guiLeft, int guiTop, int mouseX, int mouseY) {}
 
 	@Override
-	public void renderGhostRecipe(int guiLeft, int guiTop, boolean someOffsetThing, float partialTicks) {
-	}
+	public void renderGhostRecipe(int guiLeft, int guiTop, boolean someOffsetThing, float partialTicks) {}
 
 	@Override
 	public boolean mouseClicked(int p_191862_1_, int p_191862_2_, int p_191862_3_) {
@@ -77,15 +68,11 @@ public class GuiDedBook extends GuiRecipeBook {
 	}
 
 	@Override
-	public void recipesUpdated() {
-	}
+	public void recipesUpdated() {}
 
 	@Override
-	public void recipesShown(List<IRecipe> recipes) {
-	}
+	public void recipesShown(List<IRecipe> recipes) {}
 
 	@Override
-	public void setupGhostRecipe(IRecipe p_193951_1_, List<Slot> p_193951_2_) {
-	}
-
+	public void setupGhostRecipe(IRecipe p_193951_1_, List<Slot> p_193951_2_) {}
 }

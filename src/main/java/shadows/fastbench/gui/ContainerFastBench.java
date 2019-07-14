@@ -28,7 +28,6 @@ public class ContainerFastBench extends ContainerWorkbench {
 	protected final int z;
 	protected final BlockPos pos;
 	protected boolean checkMatrixChanges = true;
-	protected boolean useNormalTransfer = false;
 
 	public ContainerFastBench(EntityPlayer player, World world, int x, int y, int z) {
 		this(player, world, new BlockPos(x, y, z));
@@ -111,7 +110,7 @@ public class ContainerFastBench extends ContainerWorkbench {
 
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer player, int index) {
-		if (useNormalTransfer || !TConfig.experimentalShiftCrafting || index != 0) return super.transferStackInSlot(player, index);
+		if (!TConfig.experimentalShiftCrafting || index != 0) return super.transferStackInSlot(player, index);
 
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.inventorySlots.get(index);
