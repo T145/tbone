@@ -57,7 +57,7 @@ public class TBeacon {
 	public static final Logger LOG = LogManager.getLogger(ID);
 
 	@EventHandler
-	public void preInit(final FMLPreInitializationEvent event) {
+	public void tbeacon$preInit(final FMLPreInitializationEvent event) {
 		CapabilityManager.INSTANCE.register(BeaconLookup.class, new Capability.IStorage<BeaconLookup>() {
 
 			@Nullable
@@ -76,7 +76,7 @@ public class TBeacon {
 	}
 
 	@EventHandler
-	public void onMap(final FMLModIdMappingEvent event) {
+	public void tbeacon$onMap(final FMLModIdMappingEvent event) {
 		MinecraftForge.EVENT_BUS.post(RegistryAvailableEvent.create(ForgeRegistries.BLOCKS));
 	}
 

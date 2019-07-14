@@ -28,17 +28,17 @@ public class TFurnace {
 
 	@SubscribeEvent
 	public static void tfurnace$registerBlocks(final Register<Block> event) {
-		if (Loader.isModLoaded("fastfurnace") || Loader.isModLoaded("betterwithmods")) {
+		if (Loader.isModLoaded("betterwithmods")) {
 			return;
 		}
 
-		event.getRegistry().registerAll(new BlockFastFurnace(false).setRegistryName("minecraft", "furnace"), new BlockFastFurnace(true).setRegistryName("minecraft", "lit_furnace"));
-		GameRegistry.registerTileEntity(TileFastFurnace.class, new ResourceLocation("minecraft", "furnace"));
+		event.getRegistry().registerAll(new BlockFastFurnace(false), new BlockFastFurnace(true));
+		GameRegistry.registerTileEntity(TileFastFurnace.class, new ResourceLocation("furnace"));
 	}
 
 	@SubscribeEvent
 	public static void tfurnace$registerItems(final Register<Item> event) {
-		if (Loader.isModLoaded("fastfurnace") || Loader.isModLoaded("betterwithmods")) {
+		if (Loader.isModLoaded("betterwithmods")) {
 			return;
 		}
 

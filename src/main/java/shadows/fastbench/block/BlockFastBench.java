@@ -14,16 +14,22 @@ import net.minecraft.world.World;
 public class BlockFastBench extends BlockWorkbench {
 
 	public BlockFastBench() {
-		setHardness(2.5F);
-		setSoundType(SoundType.WOOD);
-		setTranslationKey("workbench");
+		super();
+		this.setHardness(2.5F);
+		this.setSoundType(SoundType.WOOD);
+		this.setTranslationKey("workbench");
+		this.setRegistryName("minecraft", "crafting_table");
 	}
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (world.isRemote) return true;
+		if (world.isRemote) {
+			return true;
+		}
+
 		player.addStat(StatList.CRAFTING_TABLE_INTERACTION);
 		player.openGui(TWorkbench.instance, 0, world, pos.getX(), pos.getY(), pos.getZ());
+
 		return true;
 	}
 }

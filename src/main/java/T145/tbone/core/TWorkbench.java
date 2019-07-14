@@ -90,7 +90,7 @@ public class TWorkbench implements IGuiHandler {
 	}
 
 	@EventHandler
-	public void preInit(final FMLPreInitializationEvent event) {
+	public void tworkbench$preInit(final FMLPreInitializationEvent event) {
 		NETWORK.registerMessages();
 
 		NBTTagCompound t = new NBTTagCompound();
@@ -108,26 +108,26 @@ public class TWorkbench implements IGuiHandler {
 	}
 
 	@EventHandler
-	public void init(final FMLInitializationEvent event) {
+	public void tworkbench$init(final FMLInitializationEvent event) {
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, this);
 		OreDictionary.registerOre("workbench", Blocks.CRAFTING_TABLE);
 		OreDictionary.registerOre("craftingTableWood", Blocks.CRAFTING_TABLE);
 	}
 
 	@EventHandler
-	public void serverStartRemoval(final FMLServerAboutToStartEvent event) {
+	public void tworkbench$serverStart(final FMLServerAboutToStartEvent event) {
 		if (TConfig.removeRecipeBook) {
 			proxy.replacePlayerList(event.getServer());
 		}
 	}
 
 	@SubscribeEvent
-	public static void registerBlocks(final Register<Block> event) {
-		event.getRegistry().register(new BlockFastBench().setRegistryName("minecraft", "crafting_table"));
+	public static void tworkbench$registerBlocks(final Register<Block> event) {
+		event.getRegistry().register(new BlockFastBench());
 	}
 
 	@SubscribeEvent
-	public static void registerItems(final Register<Item> event) {
+	public static void tworkbench$registerItems(final Register<Item> event) {
 		ForgeRegistries.ITEMS.register(new ItemBlock(Blocks.CRAFTING_TABLE) {
 
 			@Override
@@ -139,7 +139,7 @@ public class TWorkbench implements IGuiHandler {
 	}
 
 	@SubscribeEvent
-	public static void normalRemoval(final EntityJoinWorldEvent event) {
+	public static void tworkbench$removeBooks(final EntityJoinWorldEvent event) {
 		if (TConfig.removeRecipeBook) {
 			proxy.deleteBook(event.getEntity());
 		}

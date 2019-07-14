@@ -2,7 +2,6 @@ package T145.tbone.net.client;
 
 import java.io.IOException;
 
-import T145.tbone.core.TWorkbench;
 import T145.tbone.net.TMessage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -39,7 +38,6 @@ public class CacheLastRecipe extends TMessage {
 		GuiScreen gui = Minecraft.getMinecraft().currentScreen;
 
 		if (gui instanceof GuiFastBench) {
-			TWorkbench.LOG.info("PACKET SENT!");
 			GuiFastBench benchGui = (GuiFastBench) gui;
 			benchGui.getContainer().lastRecipe = recipe;
 		}

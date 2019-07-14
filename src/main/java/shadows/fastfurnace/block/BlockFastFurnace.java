@@ -10,13 +10,16 @@ public class BlockFastFurnace extends BlockFurnace {
 
 	public BlockFastFurnace(boolean isBurning) {
 		super(isBurning);
-		setHardness(3.5F);
-		setSoundType(SoundType.STONE);
-		setTranslationKey("furnace");
-		setCreativeTab(CreativeTabs.DECORATIONS);
+		this.setHardness(3.5F);
+		this.setSoundType(SoundType.STONE);
+		this.setCreativeTab(CreativeTabs.DECORATIONS);
+		this.setTranslationKey("furnace");
 
 		if (isBurning) {
-			setLightLevel(0.875F);
+			this.setLightLevel(0.875F);
+			this.setRegistryName("minecraft", "lit_furnace");
+		} else {
+			this.setRegistryName("minecraft", "furnace");
 		}
 	}
 
