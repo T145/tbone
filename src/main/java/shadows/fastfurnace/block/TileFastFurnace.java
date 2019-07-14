@@ -2,6 +2,7 @@ package shadows.fastfurnace.block;
 
 import java.util.Map.Entry;
 
+import T145.tbone.api.config.TConfig;
 import net.minecraft.block.BlockFurnace;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -17,7 +18,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry.ItemStackHolder;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.oredict.OreDictionary;
-import shadows.fastfurnace.FastFurnace;
 
 public class TileFastFurnace extends TileEntityFurnace {
 
@@ -152,7 +152,7 @@ public class TileFastFurnace extends TileEntityFurnace {
 	}
 
 	boolean itemsMatch(ItemStack a, ItemStack b) {
-		return FastFurnace.useStrictMatching ? ItemHandlerHelper.canItemStacksStack(a, b) : (a.isItemEqual(b) && ItemStack.areItemStackTagsEqual(a, b));
+		return TConfig.useStrictMatching ? ItemHandlerHelper.canItemStacksStack(a, b) : (a.isItemEqual(b) && ItemStack.areItemStackTagsEqual(a, b));
 	}
 
 }

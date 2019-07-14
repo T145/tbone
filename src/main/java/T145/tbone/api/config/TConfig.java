@@ -32,4 +32,7 @@ public class TConfig {
 
 	@Config.Comment("If a testing variant of shift-click crafting is enabled.")
 	public static boolean experimentalShiftCrafting = true;
+
+	@Config.Comment("If the furnace uses nbt-sensitive output matching.")
+	public static boolean useStrictMatching = true;
 }
