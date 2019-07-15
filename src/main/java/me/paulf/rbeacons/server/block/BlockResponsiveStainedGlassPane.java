@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 public final class BlockResponsiveStainedGlassPane extends BlockStainedGlassPane {
 
 	public BlockResponsiveStainedGlassPane() {
+		super();
 		this.setHardness(0.3F);
 		this.setSoundType(SoundType.GLASS);
 		this.setTranslationKey("thinStainedGlass");

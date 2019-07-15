@@ -4,7 +4,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockBeacon;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -12,9 +11,9 @@ import net.minecraft.world.World;
 public final class BlockResponsiveBeacon extends BlockBeacon {
 
 	public BlockResponsiveBeacon() {
+		super();
 		this.setLightLevel(1);
 		this.setSoundType(SoundType.GLASS);
-		this.setCreativeTab(CreativeTabs.MISC);
 		this.setTranslationKey("beacon");
 		this.setRegistryName("minecraft", "beacon");
 	}
