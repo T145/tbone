@@ -18,7 +18,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import shadows.fastfurnace.block.BlockFastFurnace;
 import shadows.fastfurnace.block.TileFastFurnace;
 
-@Mod(modid = TFurnace.ID, name = TFurnace.NAME, version = TBone.VERSION)
+@Mod(modid = TFurnace.ID, name = TFurnace.NAME, version = TBone.VERSION, canBeDeactivated = true)
 @EventBusSubscriber
 public class TFurnace {
 

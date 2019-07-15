@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@Mod(modid = TLeaves.ID, name = TLeaves.NAME, version = TBone.VERSION)
+@Mod(modid = TLeaves.ID, name = TLeaves.NAME, version = TBone.VERSION, canBeDeactivated = true)
 @EventBusSubscriber
 public class TLeaves {
 
