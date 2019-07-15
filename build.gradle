@@ -68,21 +68,12 @@ processResources {
     exclude '**/*.DS_Store'
 }
 
-// workaround for FML DirectoryDiscoverer limitations
-sourceSets {
-	main {
-		output.resourcesDir = output.classesDir
-	}
-}
-
 jar {
     from 'LICENSE'
-	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest {
         attributes 'FMLAT': 'tbone_at.cfg'
     }
 }
-// end workaround
 
 task setupEclipseWorkspace(type: Download, dependsOn: setupDecompWorkspace) {
     File forgeArchive = project.file('forge.zip')
@@ -122,8 +113,12 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 
 task devJar(type: Jar) {
     from sourceSets.main.output
+    from 'LICENSE'
+    
     classifier = 'deobf'
-    //manifest { attributes 'FMLAT': 'tbone_deobf_at.cfg' }
+    manifest {
+        attributes 'FMLAT': 'tbone_at.cfg'
+    }
 }
 
 task srcJar(type: Jar) {
