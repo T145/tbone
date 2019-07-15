@@ -5,7 +5,7 @@ import net.minecraft.tileentity.TileEntityBeacon;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public final class TileResponsiveBeacon extends TileEntityBeacon {
+public class TileResponsiveBeacon extends TileEntityBeacon {
 
 	@Override
 	public void onLoad() {
