@@ -15,7 +15,6 @@ public final class BlockResponsiveBeacon extends BlockBeacon {
 		this.setLightLevel(1);
 		this.setSoundType(SoundType.GLASS);
 		this.setTranslationKey("beacon");
-		this.setRegistryName("minecraft", "beacon");
 	}
 
 	@Override

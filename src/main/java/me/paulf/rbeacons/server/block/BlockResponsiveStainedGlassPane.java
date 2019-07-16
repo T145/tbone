@@ -13,7 +13,6 @@ public final class BlockResponsiveStainedGlassPane extends BlockStainedGlassPane
 		this.setHardness(0.3F);
 		this.setSoundType(SoundType.GLASS);
 		this.setTranslationKey("thinStainedGlass");
-		this.setRegistryName("minecraft", "stained_glass_pane");
 	}
 
 	@Override

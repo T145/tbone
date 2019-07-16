@@ -18,7 +18,6 @@ public class BlockFastBench extends BlockWorkbench {
 		this.setHardness(2.5F);
 		this.setSoundType(SoundType.WOOD);
 		this.setTranslationKey("workbench");
-		this.setRegistryName("minecraft", "crafting_table");
 	}
 
 	@Override

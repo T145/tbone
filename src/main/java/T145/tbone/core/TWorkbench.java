@@ -15,6 +15,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.RegistryEvent.Register;
@@ -43,7 +44,7 @@ import shadows.fastbench.gui.ContainerFastBench;
 import shadows.fastbench.gui.GuiFastBench;
 import shadows.fastbench.proxy.IBenchProxy;
 
-@Mod(modid = TWorkbench.ID, name = TWorkbench.NAME, version = TBone.VERSION)
+@Mod(modid = TWorkbench.ID, name = TWorkbench.NAME, version = TBone.VERSION, dependencies = "required-after:tbone")
 @EventBusSubscriber
 public class TWorkbench implements IGuiHandler {
 
@@ -123,7 +124,7 @@ public class TWorkbench implements IGuiHandler {
 
 	@SubscribeEvent
 	public static void tworkbench$registerBlocks(final Register<Block> event) {
-		event.getRegistry().register(new BlockFastBench());
+		event.getRegistry().register(new BlockFastBench().setRegistryName(new ResourceLocation("crafting_table")));
 	}
 
 	@SubscribeEvent

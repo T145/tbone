@@ -48,7 +48,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@Mod(modid = TBeacon.ID, name = TBeacon.NAME, version = TBone.VERSION)
+@Mod(modid = TBeacon.ID, name = TBeacon.NAME, version = TBone.VERSION, dependencies = "required-after:tbone", canBeDeactivated = true)
 @EventBusSubscriber
 public class TBeacon {
 
@@ -82,8 +82,12 @@ public class TBeacon {
 
 	@SubscribeEvent
 	public static void tbeacon$registerBlocks(final Register<Block> event) {
-		event.getRegistry().registerAll(new BlockResponsiveBeacon(), new BlockResponsiveStainedGlass(), new BlockResponsiveStainedGlassPane());
-		GameRegistry.registerTileEntity(TileResponsiveBeacon.class, new ResourceLocation("beacon"));
+		event.getRegistry().registerAll(
+			new BlockResponsiveBeacon().setRegistryName(new ResourceLocation("beacon")),
+			new BlockResponsiveStainedGlass().setRegistryName(new ResourceLocation("stained_glass")),
+			new BlockResponsiveStainedGlassPane().setRegistryName(new ResourceLocation("stained_glass_pane"))
+		);
+		GameRegistry.registerTileEntity(TileResponsiveBeacon.class, Blocks.BEACON.getRegistryName());
 	}
 
 	@SubscribeEvent

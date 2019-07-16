@@ -18,7 +18,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import shadows.fastfurnace.block.BlockFastFurnace;
 import shadows.fastfurnace.block.TileFastFurnace;
 
-@Mod(modid = TFurnace.ID, name = TFurnace.NAME, version = TBone.VERSION, canBeDeactivated = true)
+@Mod(modid = TFurnace.ID, name = TFurnace.NAME, version = TBone.VERSION, dependencies = "required-after:tbone", canBeDeactivated = true)
 @EventBusSubscriber
 public class TFurnace {
 
@@ -32,8 +32,8 @@ public class TFurnace {
 			return;
 		}
 
-		event.getRegistry().registerAll(new BlockFastFurnace(false), new BlockFastFurnace(true));
-		GameRegistry.registerTileEntity(TileFastFurnace.class, new ResourceLocation("furnace"));
+		event.getRegistry().registerAll(new BlockFastFurnace(false).setRegistryName(new ResourceLocation("furnace")), new BlockFastFurnace(true).setRegistryName(new ResourceLocation("lit_furnace")));
+		GameRegistry.registerTileEntity(TileFastFurnace.class, Blocks.FURNACE.getRegistryName());
 	}
 
 	@SubscribeEvent

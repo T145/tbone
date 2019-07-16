@@ -14,7 +14,6 @@ public final class BlockResponsiveStainedGlass extends BlockStainedGlass {
 		this.setHardness(0.3F);
 		this.setSoundType(SoundType.GLASS);
 		this.setTranslationKey("stainedGlass");
-		this.setRegistryName("minecraft", "stained_glass");
 	}
 
 	@Override
