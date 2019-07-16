@@ -1,4 +1,4 @@
-package T145.tbone.api.network;
+package T145.tbone.api.net;
 
 import net.minecraft.world.World;
 

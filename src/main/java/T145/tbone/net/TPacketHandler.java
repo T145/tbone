@@ -15,8 +15,8 @@
  ******************************************************************************/
 package T145.tbone.net;
 
-import T145.tbone.api.network.IPositionedMessage;
-import T145.tbone.api.network.IWorldPositionedMessage;
+import T145.tbone.api.net.IPositionedMessage;
+import T145.tbone.api.net.IWorldPositionedMessage;
 import net.minecraft.util.IThreadListener;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
