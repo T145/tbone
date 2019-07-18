@@ -19,29 +19,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import T145.tbone.api.config.TConfig;
-import T145.tbone.items.TItemBlock;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.IStringSerializable;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StringUtils;
-import net.minecraft.util.datafix.DataFixer;
-import net.minecraft.util.datafix.FixTypes;
-import net.minecraft.util.datafix.walkers.ItemStackDataLists;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.event.world.BlockEvent.NeighborNotifyEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -50,10 +36,6 @@ import net.minecraftforge.fml.common.ModMetadata;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.registries.IForgeRegistry;
 
 @Mod(modid = TBone.ID, name = TBone.NAME, version = TBone.VERSION, updateJSON = TBone.UPDATE_JSON)
 @EventBusSubscriber
@@ -65,14 +47,8 @@ public class TBone {
 	public static final String UPDATE_JSON = "https://raw.githubusercontent.com/T145/tbone/master/update.json";
 	public static final Logger LOG = LogManager.getLogger(NAME);
 
-	private static final ObjectList<UpdateChecker> UPDATES = new ObjectArrayList<>();
-
-	public static void registerMod(String modId, String modName) {
-		UPDATES.add(new UpdateChecker(modId, modName));
-	}
-
 	public TBone() {
-		registerMod(ID, NAME);
+		RegistrationHelper.registerMod(ID, NAME);
 	}
 
 	@Instance(ID)
@@ -103,7 +79,7 @@ public class TBone {
 	@SubscribeEvent
 	public static void tbone$playerLogin(PlayerLoggedInEvent event) {
 		if (TConfig.checkForUpdates) {
-			for (UpdateChecker mod : UPDATES) {
+			for (UpdateChecker mod : RegistrationHelper.UPDATES) {
 				if (mod.hasUpdate()) {
 					event.player.sendMessage(mod.getUpdateNotification());
 				}
@@ -126,66 +102,5 @@ public class TBone {
 				}
 			}
 		}
-	}
-
-	public static void registerInventoryFixes(DataFixer fixer, FixTypes type, Class clazz) {
-		fixer.registerWalker(type, new ItemStackDataLists(clazz, new String[] { "Items" }));
-	}
-
-	public static void registerTileEntity(Class tileClass, String modId) {
-		GameRegistry.registerTileEntity(tileClass, new ResourceLocation(modId, tileClass.getSimpleName()));
-	}
-
-	public static void registerItemBlock(IForgeRegistry<Item> registry, Block block) {
-		registry.register(new TItemBlock(block));
-	}
-
-	public static void registerItemBlock(IForgeRegistry<Item> registry, Block block, IStringSerializable[] types) {
-		registry.register(new TItemBlock(types, block));
-	}
-
-	@SideOnly(Side.CLIENT)
-	public static ModelResourceLocation getCustomModel(String modId, Item item, String customDomain, String variantPath) {
-		if (StringUtils.isNullOrEmpty(customDomain)) {
-			return new ModelResourceLocation(item.getRegistryName(), variantPath);
-		} else {
-			return new ModelResourceLocation(String.format("%s:%s", modId, customDomain), variantPath);
-		}
-	}
-
-	@SideOnly(Side.CLIENT)
-	public static void registerModel(String modId, Item item, String domain, int meta, String... variants) {
-		StringBuilder path = new StringBuilder(variants[0]);
-
-		for (short i = 1; i < variants.length; ++i) {
-			path.append(',').append(variants[i]);
-		}
-
-		ModelLoader.setCustomModelResourceLocation(item, meta, getCustomModel(modId, item, domain, path.toString()));
-	}
-
-	@SideOnly(Side.CLIENT)
-	public static void registerModel(String modId, Block block, String domain, int meta, String... variants) {
-		registerModel(modId, Item.getItemFromBlock(block), domain, meta, variants);
-	}
-
-	@SideOnly(Side.CLIENT)
-	public static void registerModel(String modId, Item item, int meta, String... variants) {
-		registerModel(modId, item, null, meta, variants);
-	}
-
-	@SideOnly(Side.CLIENT)
-	public static void registerModel(String modId, Block block, int meta, String... variants) {
-		registerModel(modId, block, null, meta, variants);
-	}
-
-	@SideOnly(Side.CLIENT)
-	public static void registerTileRenderer(Class tileClass, TileEntitySpecialRenderer tileRenderer) {
-		ClientRegistry.bindTileEntitySpecialRenderer(tileClass, tileRenderer);
-	}
-
-	@SideOnly(Side.CLIENT)
-	public static String getVariantName(IStringSerializable variant) {
-		return String.format("variant=%s", variant.getName());
 	}
 }
