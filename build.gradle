@@ -37,8 +37,6 @@ repositories {
     jcenter()
     maven { url = 'http://files.minecraftforge.net/maven' }
     maven { url = 'https://minecraft.curseforge.com/api/maven' }
-    maven { url 'https://dvs1.progwml6.com/files/maven' }
-	maven { url 'http://tehnut.info/maven' }
 }
 
 version = "${gitVersion()}+mc${project.minecraft_version}"
@@ -59,8 +57,6 @@ minecraft {
 
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
-    deobfCompile "mezz.jei:jei_1.12.2:+"
-	deobfCompile "mcp.mobius.waila:Hwyla:1.8+"
 }
 
 processResources {
@@ -70,9 +66,6 @@ processResources {
 
 jar {
     from 'LICENSE'
-    manifest {
-        attributes 'FMLAT': 'tbone_at.cfg'
-    }
 }
 
 task setupEclipseWorkspace(type: Download, dependsOn: setupDecompWorkspace) {
@@ -114,11 +107,7 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 task devJar(type: Jar) {
     from sourceSets.main.output
     from 'LICENSE'
-    
     classifier = 'deobf'
-    manifest {
-        attributes 'FMLAT': 'tbone_at.cfg'
-    }
 }
 
 task srcJar(type: Jar) {

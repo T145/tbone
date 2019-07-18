@@ -23,18 +23,23 @@ import T145.tbone.items.TItemBlock;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.Item;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
 import net.minecraft.util.datafix.DataFixer;
 import net.minecraft.util.datafix.FixTypes;
 import net.minecraft.util.datafix.walkers.ItemStackDataLists;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
+import net.minecraftforge.event.world.BlockEvent.NeighborNotifyEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -101,6 +106,23 @@ public class TBone {
 			for (UpdateChecker mod : UPDATES) {
 				if (mod.hasUpdate()) {
 					event.player.sendMessage(mod.getUpdateNotification());
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void tleaves$notifyLeaves(final NeighborNotifyEvent event) {
+		if (TConfig.decayLeavesQuickly) {
+			World world = event.getWorld();
+
+			for (EnumFacing facing : event.getNotifiedSides()) {
+				BlockPos pos = event.getPos().offset(facing);
+				IBlockState state = world.getBlockState(pos);
+				Block block = state.getBlock();
+
+				if (block.isLeaves(state, world, pos)) {
+					world.scheduleUpdate(pos, block, 2 + world.rand.nextInt(6));
 				}
 			}
 		}
