@@ -15,8 +15,6 @@
  ******************************************************************************/
 package T145.tbone.net;
 
-import T145.tbone.api.net.IPositionedMessage;
-import T145.tbone.api.net.IWorldPositionedMessage;
 import net.minecraft.util.IThreadListener;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -57,18 +55,5 @@ public abstract class TPacketHandler {
 
 	public void sendToAllAround(TMessage msg, World world, BlockPos pos) {
 		network.sendToAllAround(msg, getTargetPoint(world, pos));
-	}
-
-	public void sendToAllAround(TMessage msg, World world) {
-		if (msg instanceof IPositionedMessage) {
-			network.sendToAllAround(msg, getTargetPoint(world, ((IPositionedMessage) msg).getPos()));
-		}
-	}
-
-	public void sendToAllAround(TMessage msg) {
-		if (msg instanceof IWorldPositionedMessage) {
-			IWorldPositionedMessage m = (IWorldPositionedMessage) msg;
-			network.sendToAllAround(msg, getTargetPoint(m.getWorld(), m.getPos()));
-		}
 	}
 }
