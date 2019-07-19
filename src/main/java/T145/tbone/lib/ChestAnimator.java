@@ -34,17 +34,11 @@ public class ChestAnimator {
 	public double prevLidAngle;
 	public int numPlayersUsing;
 
-	private final World world;
-
-	public ChestAnimator(World world) {
-		this.world = world;
-	}
-
 	public boolean isOpen() {
 		return lidAngle > 0.0F;
 	}
 
-	public void update(EntityPlayer player, BlockPos pos, SoundEvent sound, boolean opening, boolean trapped) {
+	public void update(EntityPlayer player, World world, BlockPos pos, SoundEvent sound, boolean opening, boolean trapped) {
 		if (!player.isSpectator()) {
 			if (opening) {
 				++this.numPlayersUsing;
@@ -69,7 +63,7 @@ public class ChestAnimator {
 		}
 	}
 
-	public void tick(BlockPos pos) {
+	public void tick(World world, BlockPos pos) {
 		if (!world.isRemote) {
 			IBlockState state = world.getBlockState(pos);
 
