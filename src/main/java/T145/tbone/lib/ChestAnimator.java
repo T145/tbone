@@ -15,13 +15,12 @@
  ******************************************************************************/
 package T145.tbone.lib;
 
-import net.minecraft.entity.Entity;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class ChestAnimator {
@@ -29,91 +28,63 @@ public class ChestAnimator {
 	public static final int EVENT_PLAYER_USED = -1;
 	public static final int EVENT_CHEST_NOM = -2;
 
-	public float lidAngle;
-	public float prevLidAngle;
+	public double lidAngle;
+	public double prevLidAngle;
 	public int numPlayersUsing;
 
-	private final WorldContextProvider provider;
+	private final World world;
 
-	public ChestAnimator(TileEntity tileEntity) {
-		this.provider = new WorldContextProvider(tileEntity);
-	}
-
-	public ChestAnimator(Entity entity) {
-		this.provider = new WorldContextProvider(entity);
+	public ChestAnimator(World world) {
+		this.world = world;
 	}
 
 	public boolean isOpen() {
 		return lidAngle > 0.0F;
 	}
 
-	public void openInventory(SoundEvent openSound, EntityPlayer player, boolean trapped) {
+	public void open(EntityPlayer player, BlockPos pos, SoundEvent sound, boolean isTileEntity, boolean trapped) {
 		if (!player.isSpectator()) {
-			if (numPlayersUsing < 0) {
-				numPlayersUsing = 0;
+			this.numPlayersUsing = MathHelper.clamp(numPlayersUsing, 0, numPlayersUsing) + 1;
+			world.playSound(player, pos, sound, SoundCategory.BLOCKS, 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
+
+			if (isTileEntity) {
+				Block block = world.getBlockState(pos).getBlock();
+
+				world.addBlockEvent(pos, block, EVENT_PLAYER_USED, numPlayersUsing);
+				world.notifyNeighborsOfStateChange(pos, block, false);
+
+				if (trapped) {
+					world.notifyNeighborsOfStateChange(pos.down(), block, false);
+				}
 			}
-
-			World world = provider.getWorld();
-			BlockPos pos = provider.getPos();
-
-			provider.activateChest(EVENT_PLAYER_USED, ++numPlayersUsing);
-			world.playSound(player, pos, openSound, SoundCategory.BLOCKS, 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
-			provider.updateChest(trapped);
 		}
 	}
 
-	public void openInventory(EntityPlayer player, boolean trapped) {
-		this.openInventory(SoundEvents.BLOCK_CHEST_OPEN, player, trapped);
-	}
-
-	public void openInventory(EntityPlayer player) {
-		this.openInventory(player, false);
-	}
-
-	public void closeInventory(SoundEvent closeSound, EntityPlayer player, boolean trapped) {
+	public void close(EntityPlayer player, BlockPos pos, SoundEvent sound, boolean isTileEntity, boolean trapped) {
 		if (!player.isSpectator()) {
-			World world = provider.getWorld();
-			BlockPos pos = provider.getPos();
+			--this.numPlayersUsing;
+			world.playSound(player, pos, sound, SoundCategory.BLOCKS, 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
 
-			provider.activateChest(EVENT_PLAYER_USED, --numPlayersUsing);
-			world.playSound(player, pos, closeSound, SoundCategory.BLOCKS, 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
-			provider.updateChest(trapped);
+			if (isTileEntity) {
+				Block block = world.getBlockState(pos).getBlock();
+
+				world.addBlockEvent(pos, block, EVENT_PLAYER_USED, numPlayersUsing);
+				world.notifyNeighborsOfStateChange(pos, block, false);
+
+				if (trapped) {
+					world.notifyNeighborsOfStateChange(pos.down(), block, false);
+				}
+			}
 		}
 	}
 
-	public void closeInventory(EntityPlayer player, boolean trapped) {
-		this.closeInventory(SoundEvents.BLOCK_CHEST_CLOSE, player, trapped);
-	}
+	public void tick(BlockPos pos, boolean isTileEntity) {
+		if (isTileEntity && !world.isRemote && ((world.getTotalWorldTime() + pos.getX() + pos.getY() + pos.getZ()) & 0x1F) == 0) {
+			world.addBlockEvent(pos, world.getBlockState(pos).getBlock(), EVENT_PLAYER_USED, this.numPlayersUsing);
+		}
 
-	public void closeInventory(EntityPlayer player) {
-		this.closeInventory(player, false);
-	}
-
-	/**
-	 * @param a   The value
-	 * @param b   The value to approach
-	 * @param max The maximum step
-	 * @return the closed value to b no less than max from a
-	 */
-	private float lerp(float a, float b, float max) {
-		return (a > b) ? (a - b < max ? b : a - max) : (b - a < max ? b : a + max);
-	}
-
-	public void tick() {
 		prevLidAngle = lidAngle;
-		lidAngle = lerp(lidAngle, numPlayersUsing > 0 ? 1.0F : 0.0F, 0.1F);
-	}
-
-	public void tickTileEntity(BlockPos pos) {
-		if (provider.hasTileEntity()) {
-			World world = provider.getWorld();
-
-			if (!world.isRemote && ((world.getTotalWorldTime() + pos.getX() + pos.getY() + pos.getZ()) & 0x1F) == 0) {
-				provider.activateChest(1, numPlayersUsing);
-			}
-		}
-
-		tick();
+		lidAngle = MathHelper.clampedLerp(lidAngle, numPlayersUsing > 0 ? 1.0D : 0.0D, 0.1D);
 	}
 
 	public boolean receiveClientEvent(int event, int data) {
@@ -122,8 +93,8 @@ public class ChestAnimator {
 			numPlayersUsing = data;
 			return true;
 		case EVENT_CHEST_NOM:
-			if (lidAngle < data / 10F) {
-				lidAngle = data / 10F;
+			if (lidAngle < data / 10D) {
+				lidAngle = data / 10D;
 			}
 			return true;
 		default:
@@ -131,10 +102,10 @@ public class ChestAnimator {
 		}
 	}
 
-	public float getRenderAngle(float partialTicks) {
-		float f = prevLidAngle + (lidAngle - prevLidAngle) * partialTicks;
-		f = 1.0F - f;
-		f = 1.0F - f * f * f;
-		return (float) -(f * (Math.PI / 2F));
+	public double getLidAngle(float partialTicks) {
+		double f = prevLidAngle + (lidAngle - prevLidAngle) * partialTicks;
+		f = 1.0D - f;
+		f = 1.0D - f * f * f;
+		return -(f * (Math.PI / 2));
 	}
 }
