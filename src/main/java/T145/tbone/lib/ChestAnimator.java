@@ -16,6 +16,8 @@
 package T145.tbone.lib;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
@@ -42,13 +44,20 @@ public class ChestAnimator {
 		return lidAngle > 0.0F;
 	}
 
-	public void open(EntityPlayer player, BlockPos pos, SoundEvent sound, boolean isTileEntity, boolean trapped) {
+	public void update(EntityPlayer player, BlockPos pos, SoundEvent sound, boolean opening, boolean trapped) {
 		if (!player.isSpectator()) {
-			this.numPlayersUsing = MathHelper.clamp(numPlayersUsing, 0, numPlayersUsing) + 1;
+			if (opening) {
+				++this.numPlayersUsing;
+			} else {
+				--this.numPlayersUsing;
+			}
+
 			world.playSound(player, pos, sound, SoundCategory.BLOCKS, 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
 
-			if (isTileEntity) {
-				Block block = world.getBlockState(pos).getBlock();
+			IBlockState state = world.getBlockState(pos);
+
+			if (state.getMaterial() != Material.AIR) {
+				Block block = state.getBlock();
 
 				world.addBlockEvent(pos, block, EVENT_PLAYER_USED, numPlayersUsing);
 				world.notifyNeighborsOfStateChange(pos, block, false);
@@ -60,27 +69,13 @@ public class ChestAnimator {
 		}
 	}
 
-	public void close(EntityPlayer player, BlockPos pos, SoundEvent sound, boolean isTileEntity, boolean trapped) {
-		if (!player.isSpectator()) {
-			--this.numPlayersUsing;
-			world.playSound(player, pos, sound, SoundCategory.BLOCKS, 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
+	public void tick(BlockPos pos) {
+		if (!world.isRemote) {
+			IBlockState state = world.getBlockState(pos);
 
-			if (isTileEntity) {
-				Block block = world.getBlockState(pos).getBlock();
-
-				world.addBlockEvent(pos, block, EVENT_PLAYER_USED, numPlayersUsing);
-				world.notifyNeighborsOfStateChange(pos, block, false);
-
-				if (trapped) {
-					world.notifyNeighborsOfStateChange(pos.down(), block, false);
-				}
+			if (state.getMaterial() != Material.AIR && ((world.getTotalWorldTime() + pos.getX() + pos.getY() + pos.getZ()) & 0x1F) == 0) {
+				world.addBlockEvent(pos, state.getBlock(), EVENT_PLAYER_USED, this.numPlayersUsing);
 			}
-		}
-	}
-
-	public void tick(BlockPos pos, boolean isTileEntity) {
-		if (isTileEntity && !world.isRemote && ((world.getTotalWorldTime() + pos.getX() + pos.getY() + pos.getZ()) & 0x1F) == 0) {
-			world.addBlockEvent(pos, world.getBlockState(pos).getBlock(), EVENT_PLAYER_USED, this.numPlayersUsing);
 		}
 
 		prevLidAngle = lidAngle;
@@ -102,10 +97,10 @@ public class ChestAnimator {
 		}
 	}
 
-	public double getLidAngle(float partialTicks) {
+	public float getLidAngle(float partialTicks) {
 		double f = prevLidAngle + (lidAngle - prevLidAngle) * partialTicks;
 		f = 1.0D - f;
 		f = 1.0D - f * f * f;
-		return -(f * (Math.PI / 2));
+		return (float) -(f * (Math.PI / 2));
 	}
 }
