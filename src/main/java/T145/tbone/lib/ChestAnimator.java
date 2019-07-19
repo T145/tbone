@@ -30,8 +30,8 @@ public class ChestAnimator {
 	public static final int EVENT_PLAYER_USED = -1;
 	public static final int EVENT_CHEST_NOM = -2;
 
-	public double lidAngle;
-	public double prevLidAngle;
+	public float lidAngle;
+	public float prevLidAngle;
 	public int numPlayersUsing;
 
 	public boolean isOpen() {
@@ -41,7 +41,7 @@ public class ChestAnimator {
 	public void update(EntityPlayer player, World world, BlockPos pos, SoundEvent sound, boolean opening, boolean trapped) {
 		if (!player.isSpectator()) {
 			if (opening) {
-				++this.numPlayersUsing;
+				this.numPlayersUsing = MathHelper.clamp(numPlayersUsing, 0, numPlayersUsing) + 1;
 			} else {
 				--this.numPlayersUsing;
 			}
@@ -63,6 +63,16 @@ public class ChestAnimator {
 		}
 	}
 
+	/**
+	 * @param a   The value
+	 * @param b   The value to approach
+	 * @param max The maximum step
+	 * @return the closed value to b no less than max from a
+	 */
+	private float lerp(float a, float b, float max) {
+		return (a > b) ? (a - b < max ? b : a - max) : (b - a < max ? b : a + max);
+	}
+
 	public void tick(World world, BlockPos pos) {
 		if (!world.isRemote) {
 			IBlockState state = world.getBlockState(pos);
@@ -73,7 +83,7 @@ public class ChestAnimator {
 		}
 
 		prevLidAngle = lidAngle;
-		lidAngle = MathHelper.clampedLerp(lidAngle, numPlayersUsing > 0 ? 1.0D : 0.0D, 0.1D);
+		lidAngle = lerp(lidAngle, numPlayersUsing > 0 ? 1.0F : 0.0F, 0.1F);
 	}
 
 	public boolean receiveClientEvent(int event, int data) {
@@ -82,8 +92,8 @@ public class ChestAnimator {
 			numPlayersUsing = data;
 			return true;
 		case EVENT_CHEST_NOM:
-			if (lidAngle < data / 10D) {
-				lidAngle = data / 10D;
+			if (lidAngle < data / 10F) {
+				lidAngle = data / 10F;
 			}
 			return true;
 		default:
@@ -93,8 +103,8 @@ public class ChestAnimator {
 
 	public float getLidAngle(float partialTicks) {
 		double f = prevLidAngle + (lidAngle - prevLidAngle) * partialTicks;
-		f = 1.0D - f;
-		f = 1.0D - f * f * f;
-		return (float) -(f * (Math.PI / 2));
+		f = 1.0F - f;
+		f = 1.0F - f * f * f;
+		return (float) -(f * (Math.PI / 2F));
 	}
 }
