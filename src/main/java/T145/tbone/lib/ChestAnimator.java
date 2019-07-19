@@ -16,8 +16,6 @@
 package T145.tbone.lib;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
@@ -33,6 +31,11 @@ public class ChestAnimator {
 	public float lidAngle;
 	public float prevLidAngle;
 	public int numPlayersUsing;
+	public final boolean updateBlock;
+
+	public ChestAnimator(boolean updateBlock) {
+		this.updateBlock = updateBlock;
+	}
 
 	public boolean isOpen() {
 		return lidAngle > 0.0F;
@@ -48,10 +51,8 @@ public class ChestAnimator {
 
 			world.playSound(player, pos, sound, SoundCategory.BLOCKS, 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
 
-			IBlockState state = world.getBlockState(pos);
-
-			if (state.getMaterial() != Material.AIR) {
-				Block block = state.getBlock();
+			if (updateBlock) {
+				Block block = world.getBlockState(pos).getBlock();
 
 				world.addBlockEvent(pos, block, EVENT_PLAYER_USED, numPlayersUsing);
 				world.notifyNeighborsOfStateChange(pos, block, false);
@@ -74,12 +75,8 @@ public class ChestAnimator {
 	}
 
 	public void tick(World world, BlockPos pos) {
-		if (!world.isRemote) {
-			IBlockState state = world.getBlockState(pos);
-
-			if (state.getMaterial() != Material.AIR && ((world.getTotalWorldTime() + pos.getX() + pos.getY() + pos.getZ()) & 0x1F) == 0) {
-				world.addBlockEvent(pos, state.getBlock(), EVENT_PLAYER_USED, this.numPlayersUsing);
-			}
+		if (!world.isRemote && updateBlock && ((world.getTotalWorldTime() + pos.getX() + pos.getY() + pos.getZ()) & 0x1F) == 0) {
+			world.addBlockEvent(pos, world.getBlockState(pos).getBlock(), EVENT_PLAYER_USED, this.numPlayersUsing);
 		}
 
 		prevLidAngle = lidAngle;
