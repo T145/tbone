@@ -15,8 +15,6 @@
  ******************************************************************************/
 package T145.tbone.api;
 
-import org.apache.commons.lang3.StringUtils;
-
 import T145.tbone.core.TBone;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -51,10 +49,6 @@ public interface ITItem {
 		item.setRegistryName(resource);
 		item.setTranslationKey(resource.toString());
 		item.setCreativeTab(tab);
-	}
-
-	default String getCreatorModId(ItemStack stack, CreativeTabs tab) {
-		return tab.getTabLabel().replace("itemGroup.", StringUtils.EMPTY);
 	}
 
 	@SideOnly(Side.CLIENT)

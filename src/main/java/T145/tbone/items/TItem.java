@@ -57,7 +57,7 @@ public class TItem extends Item implements ITItem {
 
 	@Override
 	public String getCreatorModId(ItemStack stack) {
-		return this.getCreatorModId(stack, getCreativeTab());
+		return this.getRegistryName().getNamespace();
 	}
 
 	// NOTE: JEI doesn't like do anything clever w/ this, so just leave it like this.
