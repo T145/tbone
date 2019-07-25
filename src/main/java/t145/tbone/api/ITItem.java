@@ -54,7 +54,7 @@ public interface ITItem {
 	@SideOnly(Side.CLIENT)
 	default void prepareCreativeTab(Item item, NonNullList<ItemStack> items) {
 		if (item.getHasSubtypes()) {
-			for (int meta = 0; meta < getTypes().length; ++meta) {
+			for (short meta = 0; meta < getTypes().length; ++meta) {
 				items.add(new ItemStack(item, 1, meta));
 			}
 		} else {

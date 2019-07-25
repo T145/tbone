@@ -12,9 +12,13 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class ClientRegistrationHelper {
+public class TClient {
 
-	private ClientRegistrationHelper() {}
+	private TClient() {}
+
+	public static String getVariantName(IStringSerializable variant) {
+		return String.format("variant=%s", variant.getName());
+	}
 
 	public static ModelResourceLocation getCustomModel(String modId, Item item, String customDomain, String variantPath) {
 		if (StringUtils.isNullOrEmpty(customDomain)) {
@@ -46,11 +50,15 @@ public class ClientRegistrationHelper {
 		registerModel(modId, block, null, meta, variants);
 	}
 
-	public static void registerTileRenderer(Class tileClass, TileEntitySpecialRenderer tileRenderer) {
-		ClientRegistry.bindTileEntitySpecialRenderer(tileClass, tileRenderer);
+	public static void registerModel(String modId, Item item, int meta, IStringSerializable type) {
+		registerModel(modId, item, meta, getVariantName(type));
 	}
 
-	public static String getVariantName(IStringSerializable variant) {
-		return String.format("variant=%s", variant.getName());
+	public static void registerModel(String modId, Block block, int meta, IStringSerializable type) {
+		registerModel(modId, block, meta, getVariantName(type));
+	}
+
+	public static void registerTileRenderer(Class tileClass, TileEntitySpecialRenderer tileRenderer) {
+		ClientRegistry.bindTileEntitySpecialRenderer(tileClass, tileRenderer);
 	}
 }

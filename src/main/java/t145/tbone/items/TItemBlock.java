@@ -60,7 +60,7 @@ public class TItemBlock extends ItemBlock implements ITItem {
 		return this.block.getRegistryName().getNamespace();
 	}
 
-	// NOTE: JEI doesn't like do anything clever w/ this, so just leave it like this.
+	// NOTE: JEI doesn't me like doing anything clever w/ this, so just leave it like this.
 	@Override
 	public String getTranslationKey(ItemStack stack) {
 		if (hasSubtypes) {

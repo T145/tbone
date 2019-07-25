@@ -13,11 +13,11 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 import t145.tbone.items.TItemBlock;
 
-public class RegistrationHelper {
+public class TServer {
 
 	static final ObjectList<UpdateChecker> UPDATES = new ObjectArrayList<>();
 
-	private RegistrationHelper() {}
+	private TServer() {}
 
 	public static void registerMod(String modId, String modName) {
 		UPDATES.add(new UpdateChecker(modId, modName));

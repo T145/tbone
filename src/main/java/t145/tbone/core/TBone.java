@@ -48,7 +48,7 @@ public class TBone {
 	public static final Logger LOG = LogManager.getLogger(NAME);
 
 	public TBone() {
-		RegistrationHelper.registerMod(ID, NAME);
+		TServer.registerMod(ID, NAME);
 	}
 
 	@Instance(ID)
@@ -79,7 +79,7 @@ public class TBone {
 	@SubscribeEvent
 	public static void tbone$playerLogin(final PlayerLoggedInEvent event) {
 		if (TConfig.checkForUpdates) {
-			for (UpdateChecker mod : RegistrationHelper.UPDATES) {
+			for (UpdateChecker mod : TServer.UPDATES) {
 				if (mod.hasUpdate()) {
 					event.player.sendMessage(mod.getUpdateNotification());
 				}
